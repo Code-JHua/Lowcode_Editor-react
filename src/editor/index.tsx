@@ -18,7 +18,7 @@ export default function LowCodeEditor() {
         <Allotment.Pane>
           <EditArea></EditArea>
         </Allotment.Pane>
-        <Allotment.Pane preferredSize={300} maxSize={600} minSize={50}>
+        <Allotment.Pane preferredSize={300} maxSize={650} minSize={50}>
           <Setting></Setting>
         </Allotment.Pane>
       </Allotment>

@@ -16,11 +16,15 @@ export function useMaterialDrop(accept: string[], id: number) {
         const didDrop = monitor.didDrop() // 是否被动冒泡接受其他组件
         if (didDrop) return
         messageApi.success(item.type)
+        // 将这个名字对应的组件对象植入到 json 中
         addComponent({
           id: new Date().getTime(),
           name: item.type,
-          // 将这个名字对应的组件对象植入到 json 中
-          props: componentConfig?.[item.type]?.defaultProps
+          props: componentConfig?.[item.type]?.defaultProps,
+          desc: componentConfig?.[item.type]?.desc,
+          style: {
+            
+          },
         },id)
       },
       collect: (monitor) => {

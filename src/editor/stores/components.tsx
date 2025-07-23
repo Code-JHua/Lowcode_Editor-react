@@ -1,9 +1,12 @@
 import { create } from 'zustand'
+import type { CSSProperties } from 'react'
+
 export interface Component {
   id: number,
   name: string,
   props: any,
-  desc?: string,
+  desc: string,
+  style?: CSSProperties,
   children?: Component[],
   parentId?: number,
 }
@@ -17,6 +20,7 @@ export interface Action {
   removeComponent: (id: number) => void,
   updateComponentProps: (id: number, props: any) => void
   setCurComponentId: (id: number) => void,
+  updateComponentStyle: (id: number, style: CSSProperties) => void,
 }
 
 export const useComponentsStore = create<State & Action>((set, get) => ({
@@ -76,6 +80,15 @@ export const useComponentsStore = create<State & Action>((set, get) => ({
     set({
       curComponentId: id,
       curComponent: getComponentById(id, get().components)
+    })
+  },
+  updateComponentStyle(id, style) {
+    set((state) => {
+      const component = getComponentById(id, state.components)
+      if (component) {
+        component.style = { ...component.style, ...style }
+      }
+      return { components: [...state.components] }
     })
   },
 }))

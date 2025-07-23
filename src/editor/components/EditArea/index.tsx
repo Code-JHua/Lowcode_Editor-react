@@ -52,6 +52,7 @@ export default function EditArea() {
           key: component.id,
           id: component.id,
           name: component.name,
+          style: component.style,
           ...config.defaultProps,
           ...component.props,
         },
@@ -59,12 +60,12 @@ export default function EditArea() {
       )
     })
   }
-
+  // 鼠标悬停事件
   const handleMouseOver: React.MouseEventHandler = (e) => {
     const path = e.nativeEvent.composedPath()
     for (let i = 0; i < path.length; i++) {
       const ele = path[i] as HTMLElement
-      const componentId = ele.dataset.componentId
+      const componentId = ele.dataset && ele.dataset.componentId
       if (componentId) {
         setHoverComponentId(+componentId)
         return
@@ -73,12 +74,12 @@ export default function EditArea() {
     setHoverComponentId(undefined)
   }
 
-  // 借助冒泡机制, 点击页面上的任何组件,点击行为都会冒泡到这里
+  // 点击事件  借助冒泡机制, 点击页面上的任何组件,点击行为都会冒泡到这里
   const handleClick: React.MouseEventHandler = (e) => {
     const path = e.nativeEvent.composedPath()
     for (let i = 0; i < path.length; i++) {
       const ele = path[i] as HTMLElement
-      const componentId = ele.dataset.componentId
+      const componentId = ele.dataset && ele.dataset.componentId
       if (componentId) {
         setCurComponentId(+componentId)
         return
@@ -91,7 +92,7 @@ export default function EditArea() {
 
       {renderComponents(components)}
 
-      {hoverComponentId && <HoverMask componentId={hoverComponentId} containerClassName='edit-area' portalWrapperClassName='portal-wrapper' />}
+      {hoverComponentId && curComponentId !== hoverComponentId && <HoverMask componentId={hoverComponentId} containerClassName='edit-area' portalWrapperClassName='portal-wrapper' />}
       
       {curComponentId && (<SelectedMask componentId={curComponentId} containerClassName='edit-area' portalWrapperClassName='portal-wrapper' />)}
 

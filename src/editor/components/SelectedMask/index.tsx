@@ -1,4 +1,4 @@
-import  { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Space, Popconfirm } from 'antd'
 import { useComponentsStore } from '../../stores/components'
@@ -12,7 +12,7 @@ interface SelectedMaskProps {
 
 export default function SelectedMask(props: SelectedMaskProps) {
   const { containerClassName, portalWrapperClassName, componentId } = props
-  const { curComponentId, curComponent } = useComponentsStore()
+  const { curComponentId, curComponent, removeComponent, setCurComponentId } = useComponentsStore()
 
   const [position, setPosition] = useState({
     top: 0,
@@ -23,8 +23,37 @@ export default function SelectedMask(props: SelectedMaskProps) {
 
   useEffect(() => {
     updatePosition()
-  }, [componentId])
-  
+  }, [componentId]) 
+
+  // 使用 ResizeObserver 监听容器和组件大小变化
+  useEffect(() => {
+    const container = document.querySelector(`.${containerClassName}`)
+    const node = document.querySelector(`[data-component-id="${componentId}"]`)
+    if (!container || !node) return
+
+    const resizeObserver = new ResizeObserver(() => {
+      updatePosition()
+    })
+
+    // 监听容器和组件的大小变化
+    resizeObserver.observe(container)
+    resizeObserver.observe(node)
+  //   // 也监听窗口大小变化
+  //   const resizeHandler = () => {
+  //     updatePosition()
+  //   }
+  //   window.addEventListener('resize', resizeHandler)
+
+  //   // 初始调用一次确保位置正确
+  //   updatePosition()
+
+  //   return () => {
+  //     resizeObserver.unobserve(container)
+  //     resizeObserver.unobserve(node)
+  //     window.removeEventListener('resize', resizeHandler)
+  //   }
+  }, [containerClassName, componentId])
+
   function updatePosition() {
     if (!componentId) {
       return
@@ -54,7 +83,10 @@ export default function SelectedMask(props: SelectedMaskProps) {
   }, [portalWrapperClassName])
 
   const handleDelete = () => {
-
+    // 移除组件 (本质上是将仓库中该组件对应的 json 数据剔除掉)
+    removeComponent(componentId)
+    // 移除选中的组件
+    setCurComponentId(null!)
   }
   return createPortal((
     <>
@@ -72,7 +104,7 @@ export default function SelectedMask(props: SelectedMaskProps) {
       }}></div>
       <div style={{
           position: 'absolute',
-          top: position.top + 21,
+          top: position.top,
           left: position.left + position.width,
           fontSize: 14,
           zIndex: 15,
@@ -89,7 +121,7 @@ export default function SelectedMask(props: SelectedMaskProps) {
             whiteSpace: 'nowrap',
           }}
           >
-            {curComponent?.name}
+            {curComponent?.desc}
           </div>
           {
             curComponentId !== 1 && (

@@ -94,7 +94,7 @@ export default function HoverMask({ containerClassName, componentId, portalWrapp
             cursor: 'pointer',
             whiteSpace: 'nowrap',
           }}
-        >{curComponent?.name}</div>
+        >{curComponent?.desc}</div>
       </div>
     </>
   ), el)

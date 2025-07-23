@@ -5,7 +5,8 @@ import { message } from 'antd'
 import type { CommonComponentProps } from '../../interface'
 import { useMaterialDrop } from '../../hooks/useMaterialDrop'
 
-export default function Page({ id, name, children }: CommonComponentProps) {
+export default function Page({ id, name, children, style }: CommonComponentProps) {
+
   // const [contextHolder] = message.useMessage()
   // const { addComponent } = useComponentsStore()
   // const {componentConfig} = useComponentConfigStore()
@@ -33,7 +34,7 @@ export default function Page({ id, name, children }: CommonComponentProps) {
   return (
     <>
       {contextHolder}
-      <div data-component-id={id} ref={dropRef} className="p-[20px] h-[100%] box-border" style={{border: canDrop ? '1px solid #1890ff' : 'none'}}>
+      <div data-component-id={id} ref={dropRef} className="p-[20px] h-[100%] box-border" style={{...style, border: canDrop ? '1px solid #1890ff' : 'none'}}>
 
         {children}
       </div>
