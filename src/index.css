@@ -1,0 +1,4 @@
+/* 确保已安装 Tailwind CSS 并正确配置。以下是原代码，需确认项目已正确设置 Tailwind */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
