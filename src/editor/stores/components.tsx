@@ -11,6 +11,7 @@ export interface Component {
   parentId?: number,
 }
 export interface State {
+  mode: 'edit' | 'preview',
   components: Component[]
   curComponentId: number | null,
   curComponent: Component | null,
@@ -21,10 +22,11 @@ export interface Action {
   updateComponentProps: (id: number, props: any) => void
   setCurComponentId: (id: number) => void,
   updateComponentStyle: (id: number, style: CSSProperties) => void,
+  setMode: (mode: 'edit' | 'preview') => void,
 }
 
 export const useComponentsStore = create<State & Action>((set, get) => ({
-
+  mode: 'edit',
   // 数据
   components: [ // 整个项目的 json 树
     {
@@ -91,6 +93,9 @@ export const useComponentsStore = create<State & Action>((set, get) => ({
       return { components: [...state.components] }
     })
   },
+  setMode(mode) {
+    return set({mode: mode})
+  }
 }))
 
 

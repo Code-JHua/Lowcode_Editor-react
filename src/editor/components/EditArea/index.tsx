@@ -42,12 +42,12 @@ export default function EditArea() {
   function renderComponents(components: Component[]):React.ReactNode {
     return components.map((component) => {
       const config = componentConfig?.[component.name]
-      if (!config?.component) { // 没有对应的组件, 比如: 'page'
+      if (!config?.dev) { // 没有对应的组件, 比如: 'page'
         return null
       }
       // 渲染组件
       return React.createElement(
-        config.component,
+        config.dev,
         {
           key: component.id,
           id: component.id,

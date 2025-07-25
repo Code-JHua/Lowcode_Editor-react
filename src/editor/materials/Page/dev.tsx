@@ -1,11 +1,10 @@
 // import { useComponentsStore } from '../../stores/components'
 // import { useComponentConfigStore } from '../../stores/component-config'
 // import { useDrop } from 'react-dnd'
-import { message } from 'antd'
 import type { CommonComponentProps } from '../../interface'
 import { useMaterialDrop } from '../../hooks/useMaterialDrop'
 
-export default function Page({ id, name, children, style }: CommonComponentProps) {
+export default function Page({ id, children, style }: CommonComponentProps) {
 
   // const [contextHolder] = message.useMessage()
   // const { addComponent } = useComponentsStore()
@@ -34,7 +33,7 @@ export default function Page({ id, name, children, style }: CommonComponentProps
   return (
     <>
       {contextHolder}
-      <div data-component-id={id} ref={dropRef} className="p-[20px] h-[100%] box-border" style={{...style, border: canDrop ? '1px solid #1890ff' : 'none'}}>
+      <div data-component-id={id} ref={dropRef as any} className="p-[20px] h-[100%] box-border" style={{...style, border: canDrop ? '1px solid #1890ff' : 'none'}}>
 
         {children}
       </div>
