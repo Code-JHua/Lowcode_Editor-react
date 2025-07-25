@@ -8,7 +8,7 @@ import Prview from './components/Prview'
 import { useComponentsStore } from './stores/components'
 
 export default function LowCodeEditor() {
-  const { mode, setMode } = useComponentsStore((state: any) => state)
+  const { mode } = useComponentsStore((state: any) => state)
   return (
     <div className="h-[100vh] flex flex-col">
       <div className='h-[60px] flex items-center border-b-[2px] border-[#000000]'>
