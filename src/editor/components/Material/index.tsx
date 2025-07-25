@@ -18,11 +18,6 @@ export default function Material() {
           return <MaterialItem key={item.name + index} name={item.name} />
         })
       }
-      <pre>
-        {
-          JSON.stringify(componentList, null, 2)
-        }
-      </pre>
     </div>
   )
 }
